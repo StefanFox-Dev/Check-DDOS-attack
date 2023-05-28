@@ -47,7 +47,7 @@ $idsc = 0; //vds id конец атаки
 $ids2 = 0; //waf-aeza id атаки
 header('Content-Type: text/html; charset=utf-8');
 $start = 'false';
-echo '🟢 Перезагрузка скрипта проверки атак...';
+echo '🟠 Проверка атак...';
 
   while (true) {
     $payload = json_encode($data);
