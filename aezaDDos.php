@@ -34,7 +34,7 @@ $password = 'aeza517'; //пароль к аккаунту
 $headers = array(
     'X-API-Key: 6262%!'
 ); //api_key профиля
-$auth_url = 'http://my.aeza.net/api/auth';
+$auth_url = 'https://my.aeza.net/api/auth';
 $data = array(
     'method' => 'credentials',
     'email' => (string)$email,
