@@ -65,7 +65,7 @@ echo '🟠 Проверка атак...';
 
     //vds атаки
     $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, 'https://core.aeza.net/api/services/' . (int)$service_id . '/ddosattacks' . http_build_query(array()));
+    curl_setopt($ch, CURLOPT_URL, 'https://my.aeza.net/api/services/' . (int)$service_id . '/ddosattacks' . http_build_query(array()));
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
     $response = curl_exec($ch);
