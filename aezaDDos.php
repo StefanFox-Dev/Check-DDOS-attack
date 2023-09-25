@@ -1,55 +1,47 @@
 <?php
+$ids = 0; $ids2 = 0; $idsc = 0; $start = 'false'; $txt = '🟠 Проверка атак...';
 
-/* Отправка сообщений в ВКонтакте и Телеграм */
-function send(string $msg = ''): void {
-  $idChatTG = 0;
-  $idChatVK = 0;
-  $keyBotTG = 'bot58:an';
-  
-    //TG
-    $url = 'https://api.telegram.org/' . (string)$keyBotTG . '/sendMessage?chat_id=' . (int)$idChatTG . '&text=' . urlencode($msg);
+
+#Отправка сообщений в Телеграм / Send message to Telegram
+function send(string $message = ''): void {
+    $token = 'bot1234:TEST-test'; #токен бота / token bot
+    $id = '-10071'; #айди чата / chat id
+
+    $url = 'https://api.telegram.org/' . $token . '/sendMessage?chat_id=' . $id . '&text=' . urlencode($message);
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $result = curl_exec($ch);
     curl_close($ch);
-    
-    //VK
-    $url = 'https://api.vk.com/method/messages.send';
-    $params = [
-        'access_token' => 'vk1.a.', //key group
-        'v' => '5.85'
-    ];
-    $params['message'] = $msg;
-    $params['chat_id'] = (int)$idChatVK;
-    $ch = curl_init($url . '?' . http_build_query($params));
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    $response = curl_exec($ch);
-    curl_close($ch);
 }
 
 
-$email = 'google@gmail.com'; //почта
-$password = 'aeza517'; //пароль к аккаунту
+#АККАУНТ / ACCOUNT [my.aeza.net]
+$email = 'test@gmail.com'; #почта / email
+$password = '1234pwd'; #пароль / password
 $headers = array(
-    'X-API-Key: 6262%!'
-); //api_key профиля
+    'X-API-Key: 51ga2'
+); #api_key
+
+
+#АВТОРИЗАЦИЯ / AUTH
 $auth_url = 'https://my.aeza.net/api/auth';
 $data = array(
     'method' => 'credentials',
-    'email' => (string)$email,
-    'password' => (string)$password
+    'email' => $email,
+    'password' => $password
 );
-$service_id = 0; //номер услуги
-$service_id2 = 0; //waf-aeza номер услуги
-$ids = 0; //vds id начало атаки
-$idsc = 0; //vds id конец атаки
-$ids2 = 0; //waf-aeza id атаки
 header('Content-Type: text/html; charset=utf-8');
-$start = 'false';
-echo '🟠 Проверка атак...';
 
-  while (true) {
+
+#УСЛУГИ / SERVICES
+$service_id = 99999; #номер услуги / number service
+$service_id2 = 999999; #id waf-guard
+
+
+#СТАРТ / START
+send($txt); echo $txt;
+while (true) {
     $payload = json_encode($data);
     $ch = curl_init($auth_url);
     curl_setopt($ch, CURLOPT_POST, true);
@@ -63,9 +55,10 @@ echo '🟠 Проверка атак...';
     curl_close($ch);
     $json_response = json_decode($response, true);
 
-    //vds атаки
+
+    #service id список атак / attacks list
     $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, 'https://my.aeza.net/api/services/' . (int)$service_id . '/ddosattacks' . http_build_query(array()));
+    curl_setopt($ch, CURLOPT_URL, 'https://my.aeza.net/api/services/' . $service_id . '/ddosattacks' . http_build_query(array()));
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
     $response = curl_exec($ch);
@@ -73,7 +66,7 @@ echo '🟠 Проверка атак...';
     curl_close($ch);
     $result = json_decode($response, true);
 
-    if ($http_code === 200) {
+    if ($http_code === 200 || $http_code === 301) {
         $c = 0;
 
         foreach ($result['data']['items'] as $item) {
@@ -88,22 +81,23 @@ echo '🟠 Проверка атак...';
                 $ppsPeak = $item['ppsPeak'] ?? 0;
                 $ppsAverage = $item['ppsAverage'] ?? 0;
                 $type = $item['type'] ?? 'null';
-                $startAt = date('d-m-Y H:i', (int)$item['startAt'] + 60 * 0);
-                $endAt = date('d-m-Y H:i', (int)$item['endAt'] + 60 * 0);
-                $endAt = str_replace('01-01-1970 03:00', 'null', $endAt);
+                $startAt = date('d-m-Y H:i:s', (int)$item['startAt'] + 60 * 0);
+                $endAt = date('d-m-Y H:i:s', (int)$item['endAt'] + 60 * 0);
+                $endAt = str_replace('01-01-1970 03:00:00', 'null', $endAt);
+                $mbit = round($bpsAverage / 1000000, 1) . ' Мбит/с';
             }
         }
 
         if ($endAt == 'null') {
             if ($id !== $ids) {
                 $ids = $id;
-                $text = '📡 На сервер началась DDoS-атака #' . $id . '
+                $text = '📡 На #' . $service_id . ' началась DDoS-атака #' . $id . '
 
 💡 Метод: ' . $protocol . ' (' . $level . ')
 🖥️ Причина: ' . $type . '
 💥 Начало: ' . $startAt . '
 📨 Пакетов в секунду: ' . $ppsPeak . ' Пак/с
-🚿 Мощность в секунду: ' . round($bpsTotal / 1000000, 1) . ' МБит/с
+🚿 Мощность в секунду: ' . $mbit . '
 
 ❔ Ничего делать не нужно, наша защита автоматически фильтрует все вредоносные запросы к серверу, поэтому работа будет продолжаться в штатном режиме.';
 
@@ -112,23 +106,27 @@ echo '🟠 Проверка атак...';
             }
         } else {
             if ($idc !== $idsc) {
-                $idsc = $idc;
-                $text = '📡 На сервер закончилась DDoS-атака #' . $id . '
+            $idsc = $idc;
+            $text = '📡 На #' . $service_id . ' закончилась DDoS-атака #' . $id . '
 
-💡 Метод: ' . $protocol . ' (' . $level . ')
-🖥️ Причина: ' . $type . '
-💥 Начало: ' . $startAt . '
-🐇 Конец: ' . $endAt . '
-📨 Пакетов в секунду: ' . $ppsAverage . ' Пак/с
-🚿 Мощность в секунду: ' . round($bpsAverage / 1000000, 1) . ' МБит/с';
-                if ($start === 'true') send($text);
-                echo PHP_EOL . PHP_EOL . $text;
+            💡 Метод: ' . $protocol . ' (' . $level . ')
+            🖥️ Причина: ' . $type . '
+            💥 Начало: ' . $startAt . '
+            🐇 Конец: ' . $endAt . '
+            📨 Пакетов в секунду: ' . $ppsAverage . ' Пак/с
+            🚿 Мощность в секунду: ' . $mbit;
+            //if ($start === 'true') send($text);
+            echo PHP_EOL . PHP_EOL . $text;
             }
         }
-    } else echo PHP_EOL . PHP_EOL . date('d-m-Y H:i:s') . ': Сайт аезы умер, ' . $http_code;
+    } else {
+        $txt = date('d-m-Y H:i:s:s') . ': Сайт аезы умер, код ошибки: ' . $http_code;
+        send($txt);
+        echo PHP_EOL . PHP_EOL . $txt;
+    }
 
     /**
-    //waf-guard атаки
+    #waf-guard список атак / attacks list
     $ch2 = curl_init();
     curl_setopt($ch2, CURLOPT_URL, 'https://core.aeza.net/api/services/' . (int)$service_id2 . '/waf/attacks' . http_build_query(array()));
     curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
@@ -138,7 +136,7 @@ echo '🟠 Проверка атак...';
     curl_close($ch2);
     $result2 = json_decode($response2, true);
 
-    if ($http_code2 === 200) {
+    if ($http_code2 === 200 || $http_code === 301) {
     $c2 = 0;
 
     foreach ($result2['data']['items'] as $item){ $c2++;
@@ -146,7 +144,7 @@ echo '🟠 Проверка атак...';
     $id2 = (int)$item['id'] ?? 0;
     $protocol = 'https';
     $ips = count($item['ips'] ?? 0);
-    $createdAt = date('d-m-Y H:i', (int)$item['createdAt'] + 60 * 0);
+    $createdAt = date('d-m-Y H:i:s', (int)$item['createdAt'] + 60 * 0);
     }
     }
 
@@ -162,10 +160,10 @@ echo '🟠 Проверка атак...';
     if($start === 'true') send($text);
     echo PHP_EOL . PHP_EOL . $text;
     }
-    } else echo PHP_EOL . PHP_EOL . date('d-m-Y H:i:s') . ': Сайт аезы умер, ' . $http_code;
+    } else echo PHP_EOL . PHP_EOL . date('d-m-Y H:i:s:s') . ': Сайт аезы умер, ' . $http_code;
     */
-    
+
     $start = 'true';
-    sleep(300);
+    sleep(1);
 }
 ?>
