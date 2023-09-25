@@ -115,7 +115,7 @@ while (true) {
             🐇 Конец: ' . $endAt . '
             📨 Пакетов в секунду: ' . $ppsAverage . ' Пак/с
             🚿 Мощность в секунду: ' . $mbit;
-            //if ($start === 'true') send($text);
+            if ($start === 'true') send($text);
             echo PHP_EOL . PHP_EOL . $text;
             }
         }
@@ -150,7 +150,7 @@ while (true) {
 
     if($id2 !== $ids2){
     $ids2 = $id2;
-    $text = '📡 На сайт была зафиксирована и отфильтрована DDoS-атака #' . $id2 . '
+    $text = '📡 На #' . $service_id2 . ' была зафиксирована и отфильтрована DDoS-атака #' . $id2 . '
 
     💡 Метод: ' . $protocol . ' (L7)
     🗑 Число заблокированных адресов: ' . $ips . '
@@ -160,7 +160,11 @@ while (true) {
     if($start === 'true') send($text);
     echo PHP_EOL . PHP_EOL . $text;
     }
-    } else echo PHP_EOL . PHP_EOL . date('d-m-Y H:i:s:s') . ': Сайт аезы умер, ' . $http_code;
+    } else {
+        $txt = date('d-m-Y H:i:s:s') . ': Сайт аезы умер, код ошибки: ' . $http_code;
+        send($txt);
+        echo PHP_EOL . PHP_EOL . $txt;
+    }
     */
 
     $start = 'true';
