@@ -13,6 +13,18 @@ function send(string $message = ''): void {
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $result = curl_exec($ch);
     curl_close($ch);
+
+    $url = 'https://api.vk.com/method/messages.send';
+    $params = [
+        'access_token' => 'vk1.a.', #токен / token
+        'v' => '5.85'
+    ];
+    $params['message'] = $message;
+    $params['chat_id'] = 1; #айди чата / id chat
+    $ch = curl_init($url . '?' . http_build_query($params));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($ch);
+    curl_close($ch);
 }
 
 
