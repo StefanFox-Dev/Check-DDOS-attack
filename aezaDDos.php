@@ -2,7 +2,7 @@
 $ids = 0; $ids2 = 0; $idsc = 0; $start = 'false'; $txt = '🟠 Проверка атак...';
 
 
-#Отправка сообщений в Телеграм / Send message to Telegram
+#Отправка сообщений в Телеграм, ВК / Send message to Telegram, VK
 function send(string $message = ''): void {
     $token = 'bot1234:TEST-test'; #токен бота / token bot
     $id = '-10071'; #айди чата / chat id
