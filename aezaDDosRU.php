@@ -32,7 +32,7 @@ function send($message = 'ошибка'): void {
     } else {
         echo PHP_EOL . 'Ошибка Telegram - ' . $http_code;
 
-        $urlTG = "https://api.telegram.org/{$tokenTG}/sendMessage?chat_id={$idTG}&text=" . urlencode("🔴 Ошибка Telegram код: " . $http_code);
+        $urlTG = "https://api.telegram.org/{$tokenTG}/sendMessage?chat_id={$idTG}&parse_mode=html&text=" . urlencode($message);
         $curlTG = curl_init();
         curl_setopt($curlTG, CURLOPT_URL, $urlTG);
         curl_setopt($curlTG, CURLOPT_RETURNTRANSFER, true);
@@ -221,14 +221,14 @@ BPS: <code>' . $bpsTotal . '</code>
         if ($statusWebSite === 'false') {
             $statusWebSite = 'true';
             $txtWebSite = "🟢 Сайт $ipWebSite вернул код: <b>$http_codeb>";
-            send($txtWebSite);
+            if ($startCheckAttackList === 'true') send($txtWebSite);
             echo PHP_EOL . $txtWebSite;
         }
     } else {
         if ($statusWebSite === 'true') {
             $statusWebSite = 'false';
             $txtWebSite = "🔴 Сайт $ipWebSite вернул код: <b>$http_code</b>";
-            send($txtWebSite);
+            if ($startCheckAttackList === 'true') send($txtWebSite);
             echo PHP_EOL . $txtWebSite;
         }
     }
