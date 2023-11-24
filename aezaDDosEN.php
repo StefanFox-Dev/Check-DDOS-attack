@@ -158,7 +158,7 @@ PPS: <code>' . $ppsPeak . '</code>
 BPS: <code>' . $bpsTotal . '</code>
 Power: ' . $power . '
 
-❔ <b>You don`t need to do anything, our protection automatically filters all malicious requests to your server, so the work will continue as usual.</b>';
+❔ <b>You don’t need to do anything, our protection automatically filters all malicious requests to your server, so the work will continue as usual.</b>';
                 if ($startCheckAttackList === 'true') send($text);
                 echo PHP_EOL . PHP_EOL . $text;
             }
@@ -198,7 +198,7 @@ Power: ' . $power . '
 Number of blocked addresses: <code>' . $ips . '</code>
 Started: ' . $createdAt . '
 
-❔ <b>You don`t need to do anything, our protection automatically filters all malicious requests to your website, so the work will continue as usual.</b>';
+❔ <b>You don’t need to do anything, our protection automatically filters all malicious requests to your website, so the work will continue as usual.</b>';
             if ($startCheckAttackList === 'true') send($text);
             echo PHP_EOL . PHP_EOL . $text;
         }
