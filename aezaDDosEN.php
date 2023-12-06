@@ -119,10 +119,9 @@ while (true) {
                 $endAt = str_replace('01-01-1970 03:00:00 Europe/Moscow', 'null', $endAt);
                 $mbits = round($bpsTotal / 1000000, 2); $power = 'null';
 
-                if ((int)$mbits < 1000) $power = $mbits . ' mbps';
-                if ((int)$mbits > 999) $power = round($bpsTotal / 1000000000, 2) . ' gbps';
-                if ((int)$mbits > 999999) $power = round($bpsTotal / 1000000000000, 2) . ' tbps';
-
+                if ((int)$mbits < 1024) $power = $mbits . ' mbps';
+                if ((int)$mbits >= 1024) $power = round($mbits / 1000, 2) . ' gbps';
+                if ((int)$mbits >= 1000000) $power = round($mbits / (1000 * 1000), 2) . ' tbps';
             }
         }
 
