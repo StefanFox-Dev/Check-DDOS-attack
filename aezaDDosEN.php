@@ -128,17 +128,19 @@ while (true) {
         if ($endAt == 'null') {
             if ($id !== $ids) {
                 $ids = $id;
-                $text = '📡 <b>DDoS attack was detected and filtered on the server №' . $c . ', #ID' . $id . '</b>
+                $text = '📡 <b>DDoS attack</b> was detected and filtered on the server <code>№' . $c . ', #' . $id . '</code>
 
-Target: ' . $targetIp . '
-Method: ' . $protocol . '
-Reason: ' . $type . ' <i>' . $reason . '</i>
-Started: <b>' . $startAt . '</b>
-PPS: <code>' . $ppsPeak . '</code>
-BPS: <code>' . $bpsTotal . '</code>
-Power: ' . $power . '
-
-❔ <b>You don’t need to do anything, our protection automatically filters all malicious requests to your server, so the work will continue as usual.</b>';
+ Target: ' . $targetIp . '
+ Level: <b>' . $level . '</b>
+ Method: <b>' . $protocol . '</b>
+ Type: <b>' . $type . '</b>
+ Reason: <i>' . $reason . '</i>
+ Started: <b>' . $startAt . '</b>
+ PPS: <code>' . $ppsPeak . '</code>
+ BPS: <code>' . $bpsTotal . '</code>
+ <pre>Power: ' . $power . '</pre>
+ 
+🛡 <a href="https://aeza.net/?ref=342273">Aéza AntiDDos 3.5tbps</a>';
 
                 if ($startCheckAttackList === 'true') send($text);
                 echo PHP_EOL . PHP_EOL . $text;
@@ -146,18 +148,21 @@ Power: ' . $power . '
         } else {
             if ($idc !== $idsc) {
                 $idsc = $idc;
-                $text = '🐇 <b>DDoS attack has ended on the server #' . $id . '</b>
+                $text = '🐇 <b>DDoS attack</b> has ended on the server <code>#' . $id . '</code>
 
-Target: ' . $targetIp . '
-Method: ' . $protocol . '
-Reason: ' . $type . ' <i>' . $reason . '</i>
-Started: <b>' . $startAt . '</b>
-Ended: <b>' . $endAt . '</b>
-PPS: <code>' . $ppsPeak . '</code>
-BPS: <code>' . $bpsTotal . '</code>
-Power: ' . $power . '
-
-❔ <b>You don’t need to do anything, our protection automatically filters all malicious requests to your server, so the work will continue as usual.</b>';
+ Target: ' . $targetIp . '
+ Level: <b>' . $level . '</b>
+ Method: <b>' . $protocol . '</b>
+ Type: <b>' . $type . '</b>
+ Reason: <i>' . $reason . '</i>
+ Started: <b>' . $startAt . '</b>
+ Ended: <b>' . $endAt . '</b>
+ PPS: <code>' . $ppsPeak . '</code>
+ BPS: <code>' . $bpsTotal . '</code>
+ <pre>Power: ' . $power . '</pre>
+ 
+🛡 <a href="https://aeza.net/?ref=342273">Aéza AntiDDos 3.5tbps</a>';
+                
                 if ($startCheckAttackList === 'true') send($text);
                 echo PHP_EOL . PHP_EOL . $text;
             }
