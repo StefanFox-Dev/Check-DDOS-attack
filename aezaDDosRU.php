@@ -21,7 +21,7 @@ function send($message = 'ошибка'): void {
 
     $tokenTG = 'bot6329'; #токен бота
     $idTG = '-1'; #айди чата
-    $urlTG = "https://api.telegram.org/{$tokenTG}/sendMessage?chat_id={$idTG}&parse_mode=html&text=" . urlencode($message);
+    $urlTG = "https://api.telegram.org/{$tokenTG}/sendMessage?chat_id={$idTG}&parse_mode=html&disable_web_page_preview=true&text=" . urlencode($message);
     $curlTG = curl_init();
     curl_setopt($curlTG, CURLOPT_URL, $urlTG);
     curl_setopt($curlTG, CURLOPT_RETURNTRANSFER, true);
@@ -128,18 +128,9 @@ while (true) {
         if ($endAt == 'null') {
             if ($id !== $ids) {
                 $ids = $id;
-                $text = '📡 <b>DDoS-атака</b> была обнаружена и отфильтрована на сервере <code>№' . $c . ', #' . $id . '</code>
+                $text = '📡 <code>#' . $id . '</code> ' . $protocol . '
+<pre>' . $power . ' | ' . $ppsPeak . ' пак/с</pre>
 
- Айпи: ' . $targetIp . '
- Уровень: <b>' . $level . '</b>
- Метод: <b>' . $protocol . '</b>
- Тип: <b>' . $type . '</b>
- Причина: <i>' . $reason . '</i>
- Начало: <b>' . $startAt . '</b>
- PPS: <code>' . $ppsPeak . '</code>
- BPS: <code>' . $bpsTotal . '</code>
- <pre>Мощность: ' . $power . '</pre>
- 
 🛡 <a href="https://aeza.net/?ref=342273">Aéza AntiDDos 3.5tbps</a>';
 
                 if ($startCheckAttackList === 'true') send($text);
