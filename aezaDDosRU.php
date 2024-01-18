@@ -116,7 +116,7 @@ while (true) {
                 $type = $item['type'] ?? 'null';
                 $startAt = date('d-m-Y H:i:s', (int)$item['startAt'] + 60 * 0) . ' Europe/Moscow';
                 $endAt = date('d-m-Y H:i:s', (int)$item['endAt'] + 60 * 0) . ' Europe/Moscow';
-                $endAt = str_replace('01-01-1970 03:00:00 Europe/Moscow', 'null', $endAt);
+                $endAt = str_replace(['01-01-1970 00:00:00 Europe/Moscow', '01-01-1970 03:00:00 Europe/Moscow'], 'null', $endAt);
                 $mbits = round($bpsTotal / 1000000, 2); $power = 'null';
 
                 if ((int)$mbits < 1024) $power = $mbits . ' Мбит/с';
