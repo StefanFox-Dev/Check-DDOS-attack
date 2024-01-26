@@ -198,8 +198,7 @@ while (true) {
             echo PHP_EOL . PHP_EOL . $text;
         }
     } else {
-        $txt = date('d-m-Y H:i:s:s') . ': API AEZA ERROR CODE: ' . $http_code;
-        send($txt);
+        $txt = date('d-m-Y H:i:s:s') . ': API WAF AEZA ERROR CODE: ' . $http_code;
         echo PHP_EOL . PHP_EOL . $txt;
     }
 
