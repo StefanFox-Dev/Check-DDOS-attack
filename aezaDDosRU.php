@@ -96,7 +96,7 @@ while (true) {
     $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     $result = json_decode($response, true);
 
-    if (in_array($http_code, ['200', '301']) && $response !== false) {
+    if (in_array($http_code, [200, 301, '200', '301']) && $response !== false && $result !== null) {
         curl_close($ch);
         $c = 0;
 
@@ -174,7 +174,7 @@ while (true) {
     curl_close($ch2);
     $result2 = json_decode($response2, true);
 
-    if (in_array($http_code2, ['200', '301']) && $response2 !== false) {
+    if (in_array($http_code2, [200, 301, '200', '301']) && $response2 !== false && $result2 !== null) {
         $c2 = 0;
 
         foreach ($result2['data']['items'] as $item) {
