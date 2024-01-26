@@ -166,7 +166,7 @@ while (true) {
 
     #ATTACKS LIST $service_id2
     $ch2 = curl_init();
-    curl_setopt($ch2, CURLOPT_URL, 'https://my.aeza.net/api/services/' . $service_id2 . '/waf/attacks' . http_build_query(array()));
+    curl_setopt($ch2, CURLOPT_URL, 'https://my.aeza.net/api/services/' . $service_id2 . '/waf-notifications' . http_build_query(array()));
     curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch2, CURLOPT_HTTPHEADER, $headers);
     $response2 = curl_exec($ch2);
@@ -198,8 +198,7 @@ Started: ' . $createdAt . '
             echo PHP_EOL . PHP_EOL . $text;
         }
     } else {
-        $txt = date('d-m-Y H:i:s:s') . ': API AEZA ERROR CODE: ' . $http_code;
-        send($txt);
+        $txt = date('d-m-Y H:i:s:s') . ': API WAF AEZA ERROR CODE: ' . $http_code;
         echo PHP_EOL . PHP_EOL . $txt;
     }
 
