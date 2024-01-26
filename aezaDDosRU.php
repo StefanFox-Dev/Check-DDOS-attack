@@ -209,7 +209,7 @@ while (true) {
     curl_setopt($curlWebSite, CURLOPT_RETURNTRANSFER, true);
     $result = curl_exec($curlWebSite);
     $http_code = curl_getinfo($curlWebSite, CURLINFO_HTTP_CODE);
-    if (in_array($http_code, ['200', '301']) && $result !== false) {
+    if (in_array($http_code, [200, 301, '200', '301']) && $result !== false) {
         curl_close($curlWebSite);
 
         if ($statusWebSite === 'false') {
